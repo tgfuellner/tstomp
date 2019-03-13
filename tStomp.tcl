@@ -586,6 +586,11 @@ class tStomp {
 
 			set headers(expires) [format %.0f [expr $option(ttl) == 0 ? 0 : ([clock seconds] * 1000.0 + $option(ttl))]]
 		}
+
+        # Java javax.jms.Message.getJMSReplyTo() expect replyTo in JMSReplyTo
+		if {$option(replyTo) != ""} {
+            set headers(JMSReplyTo) $option(replyTo)
+        }
 		
 		set specialOptionMap {
 			correlationId correlation-id
